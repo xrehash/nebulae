@@ -1,1 +1,17 @@
 ﻿/** custom stuff here*/
+@import url(https://fonts.googleapis.com/css?family=Harmattan);
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+body{
+    font-family:'Roboto',sans-serif;
+}
+
+.superTitle{
+    font-family:'Harmattan','Comic Sans MS',sans-serif;
+    font-weight:700;
+    font-size:28pt;
+}
+.title{
+    
+}
+

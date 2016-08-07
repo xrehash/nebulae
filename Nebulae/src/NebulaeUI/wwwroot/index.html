@@ -11,6 +11,9 @@
     <link href="lib/devextreme/css/dx.common.css" rel="stylesheet" />
     <link href="lib/devextreme/css/dx.spa.css" rel="stylesheet" />
     <link href="lib/devextreme/css/dx.light.css" rel="stylesheet" />
+    <link rel="dx-template" type="text/html" href="lib/devextreme/layouts/SlideOut/SlideOutLayout.html" />
+    <link rel="dx-template" type="text/html" href="lib/devextreme/layouts/SlideOut/SimpleLayout.html" />
+    <link rel="dx-template" type="text/html" href="lib/devextreme/layouts/SlideOut/Navbar.html" />
     <!-- custom -->
     <link href="style.css" rel="stylesheet" />
 
@@ -22,8 +25,26 @@
     <script src="lib/devextreme/js/jszip.js"></script>
     <script src="lib/devextreme/js/globalize.js"></script>
     <script src="lib/devextreme/js/dx.webappjs.js"></script>
+    <script src="index.js"></script>
+
 </head>
 <body>
-    <h1>Home</h1>
+    <div id="pageContent">
+        <div class="page-header">
+            <h1 class="superTitle" data-bind="text:superTitle"></h1>
+            <div class="row">
+                <h2 class="title col-md-6 col-md-offset-1" data-bind="text:title"></h2>
+            </div>
+        </div>
+    </div>
+
+        <script type="text/javascript">
+            window.app = new xrehashApp();
+            app.start();
+            $(document).ready(function () {
+                ko.applyBindings(app, document.getElementById('#pageContent'));
+            });
+        </script>
 </body>
+
 </html>
