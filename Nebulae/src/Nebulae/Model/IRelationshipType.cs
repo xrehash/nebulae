@@ -7,7 +7,7 @@ namespace Nebulae.Model
 {
     public interface IRelationshipType
     {
-        string ResourceId { get; }
+        string RelationshipTypeId { get; }
         string Name { get; }
         IResourceType SourceType { get; }
         IResourceType TargetType { get; }

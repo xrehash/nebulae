@@ -15,7 +15,7 @@ namespace Nebulae.Model {
             _target = target;
         }
 
-        public string ResourceId { get { return _id.ToString(); } }
+        public string RelationshipTypeId { get { return _id.ToString(); } }
         public string Name { get; protected set; }
         public IResourceType SourceType
         {

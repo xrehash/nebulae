@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Nebulae.Service;
+using Microsoft.AspNetCore.Routing;
+using System.IO;
+using log4net;
 
 namespace Nebulae
 {
@@ -20,6 +24,8 @@ namespace Nebulae
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            log4net.Config.XmlConfigurator.Configure(new FileInfo("log.config"));
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -28,7 +34,17 @@ namespace Nebulae
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddSingleton<IConfigurationRoot>(Configuration);
+            services.AddRouting();
+            services.AddMvc().AddJsonOptions(options => {
+                options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Local;
+                options.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
+                options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            });
+
+            services.AddOptions();
+            services.AddTransient(typeof(DataService), typeof(DataService));
+            services.AddSingleton<ILog>((sp) => log4net.LogManager.GetLogger(sp.GetType()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,7 +52,10 @@ namespace Nebulae
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            var routeBuilder = new RouteBuilder(app);
+            //routeBuilder.MapRoute("defaultRoute", "api/{controller}/{action}");
 
+            app.UseRouter(routeBuilder.Build());
             app.UseMvc();
         }
     }

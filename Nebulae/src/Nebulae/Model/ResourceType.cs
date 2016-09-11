@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Schema;
+using Newtonsoft.Json.Linq;
 
 namespace Nebulae.Model {
     public class ResourceType : IResourceType {
@@ -19,7 +20,7 @@ namespace Nebulae.Model {
             _parentType = parent;
             Name = name;
         }
-        public string ResourceId
+        public string ResourceTypeId
         {
             get
             {
@@ -29,7 +30,7 @@ namespace Nebulae.Model {
         public string Name { get; protected set; }
         public IResourceType ParentType { get { return _parentType; } }
         public bool IsA(IResourceType resourceType) {
-            return ResourceId.Equals(resourceType.ResourceId)
+            return ResourceTypeId.Equals(resourceType.ResourceTypeId)
                 || (ParentType != null && ParentType.IsA(resourceType));
         }
 
