@@ -4,7 +4,7 @@ using MongoDB.Driver;
 
 namespace Nebulae.Model
 {
-    interface IDataStoreContext
+    public interface IDataStoreContext
     {
         T GetResourceType<T>(string id) where T : IResourceType;
         void PutResourceType<T>(T resourceType) where T : IResourceType;

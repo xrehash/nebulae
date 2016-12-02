@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Nebulae.Model;
 
 namespace UI
 {
@@ -29,6 +30,8 @@ namespace UI
         {
             // Add framework services.
             services.AddMvc();
+            services.AddSingleton<IConfigurationRoot>(Configuration);
+            services.AddTransient<IDataStoreContext>((IServiceProvider sp) => new DataStoreContext(Configuration.GetValue<string>("DBURL")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
